@@ -1,5 +1,7 @@
 # data files
 data/*
+raw_data/*
+metadata/*
 
 # log files
 */logs/*
