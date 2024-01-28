@@ -46,6 +46,7 @@ def get_unique_accessions(filepath, metadata, result, nonempty_result):
     # keep only files with data
     df["has_data"] = df["filename"].apply(lambda x: file_size_dict[x] if x in file_size_dict else True)
     df = df[df["has_data"]]
+    df.drop(["has_data"], axis=1, inplace=True)
     print("Non-empty files:", len(df))
     df.to_csv(nonempty_result, sep="\t", index=False, header=False)
 
