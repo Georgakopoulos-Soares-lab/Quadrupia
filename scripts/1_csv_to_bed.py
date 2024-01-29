@@ -14,11 +14,16 @@ def csv_to_bed(csv_path, file, result_path):
     merged_file = os.path.join(result_path, file.replace('.csv', '.bed'))
     try:
         df = pd.read_csv(csv_file)
-        df = df.drop('filename', axis=1)
+        # drop unwanted columns if they exist
+        if 'filename' in df.columns:
+            df = df.drop('filename', axis=1)
+        if 'score' in df.columns: 
+            df = df.drop('score', axis=1)
+        if 'nbr' in df.columns:
+            df = df.drop('nbr', axis=1)
+        
+        # rename columns in the format required by pybed
         df = df.rename(columns={'chromosome': 'Chromosome', 'start': 'Start', 'end': 'End', 'sequence': 'Sequence', 'length': 'Length'})
-        # delete score and nbr column
-        df = df.drop('score', axis=1)
-        df = df.drop('nbr', axis=1)
         
         print(f"Converting {csv_file}")
         bf = pybed.BedFrame.from_frame(meta=[], data=df)
