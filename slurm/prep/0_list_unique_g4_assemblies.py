@@ -11,6 +11,16 @@ def get_type(filename):
         return "rna"
     else:
         return "genomic"
+    
+def prefer_GCF(files):
+    files = list(files)
+    if len(files) == 1:
+        return files[0]
+    else:
+        for file in files:
+            if file[:3] == "GCF":
+                return file
+        return files[0]
 
 def get_unique_accessions(filepath, metadata, result, nonempty_result):
     file_list = os.listdir(filepath)
@@ -30,17 +40,20 @@ def get_unique_accessions(filepath, metadata, result, nonempty_result):
     
     # read file list
     df = pd.DataFrame(files, columns=["filename"])
-    df["accession"] = df["filename"].apply(lambda x: '_'.join(x.split("_")[:2]))
-    df["accession_number"] = df["accession"].apply(lambda x: x.split("_")[1])
+    df["accession"] = df["filename"].apply(lambda x: '_'.join(x.split("_")[1:]))
     print("All files:", len(df))
+    df.sort_values(["accession", "filename"], ascending=False, inplace=True)
     
     # keep only GCF accession if both GCF and GCA are present
     # sort by accession number and accession in descending order and keep only the first row (GCF) 
-    df.sort_values(["accession_number", "accession"], ascending=False, inplace=True)
-    df.drop_duplicates(subset=["accession_number"], keep="first", inplace=True)
-    df.drop(["accession", "accession_number"], axis=1, inplace=True)
-    print("Files after removing duplicate accessions:", len(df))
+    # group by accession number
+    df = df.groupby("accession").agg({
+        "filename": lambda x: prefer_GCF(x)
+    }).reset_index()
+    df.drop(["accession"], axis=1, inplace=True)
     df.sort_values("filename", ascending=True, inplace=True)
+    
+    print("Files after removing duplicate accessions:", len(df))
     df.to_csv(result, sep="\t", index=False, header=False)
     
     # keep only files with data
