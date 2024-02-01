@@ -34,8 +34,8 @@ def get_nonempty_accessions(metadata, g4_list, nonempty_result):
 if __name__ == '__main__':
     # Get list of unique accessions from g4hunter
     g4hunter_metadata = f"{BASE_PATH}/metadata/g4_file_metadata.txt"
-    g4hunter_list = f"{BASE_PATH}/slurm/files/g4hunter_list.txt"
-    g4hunter_nonempty_list = f"{BASE_PATH}/slurm/files/g4hunter_nonempty_list.txt"
+    g4hunter_list = f"{BASE_PATH}/slurm/files/g4_list.txt"
+    g4hunter_nonempty_list = f"{BASE_PATH}/slurm/files/g4_nonempty_list.txt"
     get_nonempty_accessions(g4hunter_metadata, g4hunter_list, g4hunter_nonempty_list)
 
     # Get list of unique accessions from regex
