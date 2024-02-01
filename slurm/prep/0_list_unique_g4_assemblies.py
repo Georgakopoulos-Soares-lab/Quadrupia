@@ -4,6 +4,12 @@ import pandas as pd
 # Base path
 BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad"
 
+G4_PATH = f"{BASE_PATH}/raw_data/g4hunter"
+G4_LIST = f"{BASE_PATH}/slurm/files/g4_list.txt"
+
+REGEX_PATH = f"/storage/group/izg5139/default/external/genomes/all_genomes/regex/regex_gresults"
+REGEX_LIST = f"{BASE_PATH}/slurm/files/regex_list.txt"
+
 def get_type(filename):
     if "cds_from_genomic" in filename:
         return "cds"
@@ -22,27 +28,20 @@ def prefer_GCF(files):
                 return file
         return files[0]
 
-def get_unique_accessions(filepath, metadata, result, nonempty_result):
-    file_list = os.listdir(filepath)
+if __name__ == '__main__':
+    # Get list of unique accessions in G4Hunter
+    file_list = os.listdir(G4_PATH)
     
     # process only genomic file
     files = [file for file in file_list \
         if ("_genomic" in file) \
             and ("cds_from_genomic" not in file) \
                 and ("rna_from_genomic" not in file)]
-                
-    # read metadata file
-    df_meta = pd.read_csv(metadata, sep="\t")
-    df_meta['filename'] = df_meta['file'].apply(lambda x: x.split("/")[-1])
-    df_meta['type'] = df_meta['file'].apply(lambda x: get_type(x))
-    df_meta = df_meta[~df_meta['type'].isin(["cds", "rna"])]
-    file_size_dict = dict(zip(df_meta['filename'], df_meta['empty']))
     
     # read file list
     df = pd.DataFrame(files, columns=["filename"])
     df["accession"] = df["filename"].apply(lambda x: '_'.join(x.split("_")[1:]))
     print("All files:", len(df))
-    df.sort_values(["accession", "filename"], ascending=False, inplace=True)
     
     # keep only GCF accession if both GCF and GCA are present
     # sort by accession number and accession in descending order and keep only the first row (GCF) 
@@ -53,27 +52,34 @@ def get_unique_accessions(filepath, metadata, result, nonempty_result):
     df.drop(["accession"], axis=1, inplace=True)
     df.sort_values("filename", ascending=True, inplace=True)
     
-    print("Files after removing duplicate accessions:", len(df))
-    df.to_csv(result, sep="\t", index=False, header=False)
+    print("G4Hunter files after removing duplicate accessions:", len(df))
+    df.to_csv(G4_LIST, sep="\t", index=False, header=False)
     
-    # keep only files with data
-    df["has_data"] = df["filename"].apply(lambda x: file_size_dict[x] if x in file_size_dict else True)
-    df = df[df["has_data"]]
-    df.drop(["has_data"], axis=1, inplace=True)
-    print("Non-empty files:", len(df))
-    df.to_csv(nonempty_result, sep="\t", index=False, header=False)
-
-if __name__ == '__main__':
-    # Get list of unique accessions from g4hunter
-    g4hunter_path = f"{BASE_PATH}/raw_data/g4hunter"
-    g4hunter_metadata = f"{BASE_PATH}/metadata/g4_file_metadata.txt"
-    g4hunter_list = f"{BASE_PATH}/slurm/files/g4hunter_list.txt"
-    g4hunter_nonempty_list = f"{BASE_PATH}/slurm/files/g4hunter_nonempty_list.txt"
-    get_unique_accessions(g4hunter_path, g4hunter_metadata, g4hunter_list, g4hunter_nonempty_list)
-
-    # Get list of unique accessions from regex
-    regex_path = f"/storage/group/izg5139/default/external/genomes/all_genomes/regex/regex_gresults"
-    regex_metadata = f"{BASE_PATH}/metadata/regex_file_metadata.txt"
-    regex_list = f"{BASE_PATH}/slurm/files/regex_list.txt"
-    regex_nonempty_list = f"{BASE_PATH}/slurm/files/regex_nonempty_list.txt"
-    get_unique_accessions(regex_path, regex_metadata, regex_list, regex_nonempty_list)
+    # find accessions in regex that are not in g4hunter
+    g4_list = df["filename"].tolist()
+    regex_files = os.listdir(REGEX_PATH)
+    regex_files = [file for file in regex_files \
+        if ("_genomic" in file) \
+            and ("cds_from_genomic" not in file) \
+                and ("rna_from_genomic" not in file)]
+    
+    regex_extra = [file for file in regex_files \
+        if file.replace('GCA', 'GCF') not in g4_list and file.replace('GCF', 'GCA') not in g4_list]
+    
+    df_reg_extra = pd.DataFrame(regex_extra, columns=["filename"])
+    df_reg_extra["accession"] = df_reg_extra["filename"].apply(lambda x: '_'.join(x.split("_")[1:]))
+    print("Files in regex but not in G4Hunter:", len(df_reg_extra))
+    
+    # remove duplicate accessions and keep only GCF accession if both GCF and GCA are present
+    df_reg_extra = df_reg_extra.groupby("accession").agg({
+        "filename": lambda x: prefer_GCF(x)
+    }).reset_index()
+    df_reg_extra.drop(["accession"], axis=1, inplace=True)
+    regex_list = df_reg_extra["filename"].tolist()
+    print("Extra regex files after removing duplicate accessions:", len(regex_list))
+    print(regex_list)
+    
+    regex_final_list = regex_list + g4_list
+    with open(REGEX_LIST, 'w') as f:
+        for file in regex_final_list:
+            f.write(file + '\n')
