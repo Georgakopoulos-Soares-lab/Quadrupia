@@ -3,7 +3,7 @@ import os
 # Base path
 BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad"
 # list of files
-FILE_LIST = "/storage/group/izg5139/default/akshatha/gquad/slurm/files/g4_list.txt"
+FILE_LIST = f"{BASE_PATH}/slurm/files/g4_list.txt"
 
 def get_overlapping_seq(filename):
     g4_bed_file = f"{BASE_PATH}/data/g4hunter_bed/{filename}"
