@@ -3,7 +3,7 @@ import pandas as pd
 BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad"
 
 g4hunter_path = f"{BASE_PATH}/raw_data/g4hunter"
-g4hunter_nonempty_list = f"{BASE_PATH}/slurm/files/g4hunter_nonempty_list.txt"
+g4hunter_nonempty_list = f"{BASE_PATH}/slurm/files/g4_nonempty_list.txt"
 g4hunter_result_path = f"{BASE_PATH}/data/g4hunter_bed"
 df_g4hunter = pd.read_csv(g4hunter_nonempty_list, sep="\t", header=None)
 df_g4hunter.columns = ["filename"]

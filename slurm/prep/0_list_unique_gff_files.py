@@ -15,7 +15,7 @@ if __name__ == '__main__':
     g4s_list = open(regex_list).readlines()
     g4s_list = [file.strip() for file in g4s_list]
     print(len(gff_files))
-    gff_files = [file for file in gff_files if file in g4s_list]
+    gff_files = [file.replace('csv', 'gff') for file in gff_files if file in g4s_list]
     print(len(gff_files))
     with open(f"{BASE_PATH}/slurm/files/gff_files.txt", 'w') as f:
         for file in gff_files:
