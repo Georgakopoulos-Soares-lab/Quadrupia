@@ -79,7 +79,6 @@ def get_species_g4_data(filename, species_data, lock):
             'Taxa': data['group'], 
             'Genome Size': data['genome_size'], 
             'GC Percentage': data['gc_percent'],
-            'Accession': accession.split('_')[1],
             'Gene Count': data['total_gene_count'],
             'Protein Coding Gene Count': data['protein_coding_gene_count'],
             'Non Coding Gene Count': data['non_coding_gene_count'],
