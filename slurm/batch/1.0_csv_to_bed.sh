@@ -8,7 +8,7 @@
 args_file=/storage/group/izg5139/default/akshatha/gquad/slurm/files/csv_to_bed_args.txt
 
 # script_file contains the script to run
-script_file=/storage/group/izg5139/default/akshatha/gquad/scripts/1_csv_to_bed.py
+script_file=/storage/group/izg5139/default/akshatha/gquad/scripts/1.0_csv_to_bed.py
 
 # path to logs
 log_path=/storage/group/izg5139/default/akshatha/gquad/slurm/logs/csv_to_bed

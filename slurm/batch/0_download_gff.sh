@@ -5,7 +5,7 @@
 #SBATCH --array 1-100
 
 # args_file contains the arguments for the script, each line contains the arguments for one job
-args_file=/storage/group/izg5139/default/akshatha/gquad/metadata/assembly_summary_complete_genomes.txt
+args_file=/storage/group/izg5139/default/akshatha/gquad/metadata/assembly_ftp_links.txt
 
 # script_file contains the script to run
 script_file=/storage/group/izg5139/default/akshatha/gquad/scripts/0_download_gff.py
