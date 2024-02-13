@@ -10,7 +10,7 @@ df_g4hunter.columns = ["filename"]
 df_g4hunter["path"] = g4hunter_path
 df_g4hunter["result_path"] = g4hunter_result_path
 
-regex_path = f"/storage/group/izg5139/default/external/genomes/all_genomes/regex/regex_gresults"
+regex_path = f"{BASE_PATH}/raw_data/regex"
 regex_nonempty_list = f"{BASE_PATH}/slurm/files/regex_nonempty_list.txt"
 regex_result_path = f"{BASE_PATH}/data/regex_bed"
 df_regex = pd.read_csv(regex_nonempty_list, sep="\t", header=None)
