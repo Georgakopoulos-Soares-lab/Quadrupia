@@ -6,7 +6,7 @@ import urllib.request
 GFF_DIR_PATH = "/storage/group/izg5139/default/external/gff"
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Convert csv to bed files")
+    parser = argparse.ArgumentParser(description="Download GFF files")
     parser.add_argument("path", type=str, help="FTP path for genome assembly")
     cli_args = parser.parse_args()
     

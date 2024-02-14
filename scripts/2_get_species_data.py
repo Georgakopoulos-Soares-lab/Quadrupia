@@ -21,7 +21,7 @@ REFSEQ_SUMMARY = f"{BASE_PATH}/metadata/assembly_summary_refseq.txt"
 TREE_OF_LIFE = f"{BASE_PATH}/metadata/tree_of_life.csv"
 
 # GFF files(in BED format) for getting gene data
-GFF_BED_PATH = f"{BASE_PATH}/data/gff_bed"
+GFF_BED_PATH = "/storage/group/izg5139/default/akshatha/gquad/data/gff_bed"
       
 # number of CPUs on the machine
 NUM_PROC = os.cpu_count()
