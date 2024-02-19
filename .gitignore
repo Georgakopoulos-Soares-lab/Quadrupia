@@ -3,7 +3,6 @@ data/*
 raw_data/*
 plots/*
 figures/*
-old_notebooks/*
 
 # log files
 */logs/*
@@ -175,3 +174,4 @@ cython_debug/
 
 
 debug/*
+old_notebooks/*
