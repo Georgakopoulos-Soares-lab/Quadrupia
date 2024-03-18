@@ -1,3 +1,4 @@
 G4Hunter: 109874605
 Regex: 30306672
-Intersect: 13149608
+Intersect (min 1bp): 22003704
+Intersect (min 50%): 21735558
