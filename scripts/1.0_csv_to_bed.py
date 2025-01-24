@@ -3,10 +3,8 @@ import argparse
 import pandas as pd
 from fuc import pybed
 
-# Base path
-BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad"
 # Directory for temporary bed files
-TEMP_PATH = f"{BASE_PATH}/temp"
+TEMP_PATH = f"temp"
 
 def csv_to_bed(csv_path, file, result_path):
     csv_file = os.path.join(csv_path, file)

@@ -4,13 +4,11 @@ import argparse
 import traceback
 import pandas as pd
 
-# Base path
-BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad"
 # G4 Files
-G4_PATH = f"{BASE_PATH}/data/g4hunter_bed"
-REGEX_PATH = f"{BASE_PATH}/data/regex_bed"
+G4_PATH = "data/g4hunter_bed"
+REGEX_PATH = "data/regex_bed"
 # GFF files(in BED format)
-GFF_BED_PATH = f"{BASE_PATH}/data/gff_bed"
+GFF_BED_PATH = "data/gff_bed"
 
 def get_g4_data(g4_file):
     file = os.path.basename(g4_file)

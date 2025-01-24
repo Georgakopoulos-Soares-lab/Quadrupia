@@ -1,15 +1,13 @@
 import os
 
-# Base path
-BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad"
 # list of files
 FILE_LIST = "/storage/group/izg5139/default/akshatha/gquad/slurm/files/g4_list.txt"
 
 def get_overlapping_seq(filename):
-    g4_bed_file = f"{BASE_PATH}/data/g4hunter_bed/{filename}"
-    reg_bed_file = f"{BASE_PATH}/data/regex_bed/{filename}"
-    int_bed_file1 = f"{BASE_PATH}/temp/1_{filename}"
-    int_bed_file2 = f"{BASE_PATH}/temp/2_{filename}"
+    g4_bed_file = f"data/g4hunter_bed/{filename}"
+    reg_bed_file = f"data/regex_bed/{filename}"
+    int_bed_file1 = f"temp/1_{filename}"
+    int_bed_file2 = f"temp/2_{filename}"
 
     g4_count = 0
     reg_count = 0
@@ -74,8 +72,8 @@ if __name__ == '__main__':
         file_list = [file.strip() for file in file_list]
         
     # create temp directory
-    if not os.path.exists(f"{BASE_PATH}/temp"):
-        os.makedirs(f"{BASE_PATH}/temp")
+    if not os.path.exists("temp"):
+        os.makedirs("temp")
         
     for file in file_list:
         counts = get_overlapping_seq(file.replace('csv', 'bed'))
@@ -84,7 +82,7 @@ if __name__ == '__main__':
         c['intersect_min1'] += counts['intersect_min1']
         c['intersect_min50'] += counts['intersect_min50']
         
-    with open(f"{BASE_PATH}/results/counts.txt", 'w') as f:
+    with open("results/counts.txt", 'w') as f:
         f.write(f"G4Hunter: {c['g4hunter']}\n")
         f.write(f"Regex: {c['regex']}\n")
         f.write(f"Intersect (min 1bp): {c['intersect_min1']}\n")

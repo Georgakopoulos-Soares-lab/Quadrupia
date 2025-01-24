@@ -3,12 +3,10 @@ import argparse
 import traceback
 import pandas as pd
 
-# Base path
-BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad/data"
 # Path to directory containing GFF files
 GFF_DIR_PATH = "/storage/group/izg5139/default/external/gff"
 # Result path
-RESULT_PATH = f"{BASE_PATH}/gff_bed"
+RESULT_PATH = "gff_bed"
 
 def get_gff_bed_merged(gff_file):
     try:
@@ -21,21 +19,18 @@ def get_gff_bed_merged(gff_file):
         # parse gff file
         # skip metadata lines starting with '#'
         lines = [line.strip() for line in lines if not line.startswith('#')]
-        # get columns: chr, source, type, start, end
         lines = [line.split('\t')[:5] for line in lines]
         df = pd.DataFrame(lines)
         df.columns = ['chr', 'source', 'type', 'start', 'end']
         df = df[['chr', 'start', 'end', 'type']]
         # filter out "region" type
         df = df[df['type'] != 'region']
-        # convert start and end to int
         df['start'] = df['start'].astype(int)
         df['end'] = df['end'].astype(int)
-        # create new index
         df = df.reset_index(drop=True)
         
         # make directory for temp files
-        temp_dir = f"{BASE_PATH}/temp/{accession}"
+        temp_dir = f"temp/{accession}"
         cmd = f"mkdir -p {temp_dir}"
         os.system(cmd)
         

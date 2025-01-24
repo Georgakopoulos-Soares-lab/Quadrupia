@@ -4,21 +4,18 @@ import traceback
 import pandas as pd
 from multiprocessing import Process, Lock, Manager
 
-# Base path
-BASE_PATH = "/storage/group/izg5139/default/akshatha/gquad"
-
 # List of genome files
-FILE_LIST = f"{BASE_PATH}/slurm/files/regex_list.txt"
+FILE_LIST = "slurm/files/regex_list.txt"
 
 # Path to result file
-RESULT_PATH = f"{BASE_PATH}/results/species_data.csv"
+RESULT_PATH = "results/species_data.csv"
 
 # Assembly summary files for getting genome details and taxid
-GENBANK_SUMMARY = f"{BASE_PATH}/metadata/assembly_summary_genbank.txt"
-REFSEQ_SUMMARY = f"{BASE_PATH}/metadata/assembly_summary_refseq.txt"
+GENBANK_SUMMARY = "metadata/assembly_summary_genbank.txt"
+REFSEQ_SUMMARY = "metadata/assembly_summary_refseq.txt"
 
 # Tree of life data for getting taxonomic details
-TREE_OF_LIFE = f"{BASE_PATH}/metadata/tree_of_life.csv"
+TREE_OF_LIFE = "metadata/tree_of_life.csv"
 
 # GFF files(in BED format) for getting gene data
 GFF_BED_PATH = "/storage/group/izg5139/default/akshatha/gquad/data/gff_bed"
@@ -40,7 +37,7 @@ df_tree = pd.read_csv(TREE_OF_LIFE)
 df_tree.set_index('tax_id', inplace=True)
 
 # dict mapping accession to gff files (in BED format)
-with open(f"{BASE_PATH}/slurm/files/gff_bed_files.json") as file:
+with open("slurm/files/gff_bed_files.json") as file:
     gff_files = json.load(file)
 
 def get_gene_data(key):
@@ -49,7 +46,7 @@ def get_gene_data(key):
         gff_bed_file = os.path.join(GFF_BED_PATH, gff_files[key])
         gff = pd.read_csv(gff_bed_file, sep="\t", header=None)
         gff.columns = ['chr', 'start', 'end', 'type']
-        # filter by gene and get sum of all gene lengths
+        # get sum of all gene lengths
         gff = gff[gff['type'] == 'gene']
         gff['length'] = gff['end'] - gff['start']
         gene_content = gff['length'].sum()
@@ -99,9 +96,8 @@ if __name__ == "__main__":
     with open(FILE_LIST) as f:
         file_list = f.read().splitlines()
     
-    # create temp directory if not exists
-    if not os.path.exists(f"{BASE_PATH}/temp"):
-        os.makedirs(f"{BASE_PATH}/temp")   
+    if not os.path.exists("temp"):
+        os.makedirs("temp")   
     
     # shared variable between processes
     species_data = Manager().list()
