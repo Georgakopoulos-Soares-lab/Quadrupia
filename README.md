@@ -1,6 +1,8 @@
 # Quadrupia
 Quadrupia is a database of G-Quadruplex sequences from 108,449 organismal genomes across the Tree of Life. This repository contains scripts used for analysis of the G-Quadruplex data.
 
+**Paper**: https://www.biorxiv.org/content/10.1101/2024.07.09.602008v1.full
+
 ## Directories
 
 - **raw_data/** (Input data): Contains extracted G4 sequences. Please contact us for access.
