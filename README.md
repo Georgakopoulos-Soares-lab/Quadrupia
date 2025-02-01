@@ -15,6 +15,7 @@ Quadrupia is a database of G-Quadruplex sequences from 108,449 organismal genome
 - **data/**: Contains extracted G4 sequences and GFF data in bed format for further processing, and is generated using scripts in the **scripts/** and the **slurm/** directories.
 - **results/**: Contains results from processing of data in **data/** using scripts in the **scripts/** directory.
 - **notebooks/**: Contains Jupyter notebooks that use the processed data in the **results/** directory for further analysis and data visualization.
+- **supplementary_data/**: Contains supplementary data for the paper.
 
 ## Getting Started
 
