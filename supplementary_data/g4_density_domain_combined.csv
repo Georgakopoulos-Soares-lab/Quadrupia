@@ -3,7 +3,7 @@ G4Hunter,Archaea,201.31524001781844
 G4Hunter,Bacteria,147.81302266820379
 G4Hunter,Eukaryota,327.03143955669873
 G4Hunter,Virus,262.53934837757595
-Regex-based,Archaea,26.404958222617005
-Regex-based,Bacteria,29.5581573622558
-Regex-based,Eukaryota,82.75614093902134
-Regex-based,Virus,65.62317134761909
+regex-based,Archaea,26.404958222617005
+regex-based,Bacteria,29.5581573622558
+regex-based,Eukaryota,82.75614093902134
+regex-based,Virus,65.62317134761909
