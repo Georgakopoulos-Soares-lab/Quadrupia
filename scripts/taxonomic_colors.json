@@ -1,0 +1,34 @@
+{
+	"domain": [{
+                "Viruses": "#B2EBEB",
+                "Eukaryota": "#FFB2B2",
+                "Archaea": "#B2B2FF",
+                "Bacteria": "#B2D8B2"
+                },
+              {
+              "Viruses": "#66C2A5",
+              "Bacteria": "#FC8D62",
+              "Eukaryota": "#8DA0CB",
+              "Archaea": "#E78AC3"
+            }],
+            "template": {
+                         "Viruses": "#B1C266",
+                         "Bacteria": "#A6391B",
+                         "Eukaryota": "#2D4080",
+                         "Archaea": "#D13B6D"
+                          },
+           "non-template": {"Viruses": "#66C28B",
+                            "Bacteria": "#FC8D62",
+                            "Eukaryota": "#6CA5C4",
+                            "Archaea": "#9A3BD1"
+	   },
+    "kingdom": {
+                       "Viruses": "#87C4C4",
+                       "Bacteria": "#0FBF2D",
+                       "Archaea": "#7B7BED",
+                       "Fungi": "#4D325E",
+                       "Plantae": "#B50996",
+                       "Animalia": "#9BBA2D",
+                       "Protista": "#C78F5B"
+                     }
+}
