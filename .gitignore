@@ -3,6 +3,7 @@ data/*
 raw_data/*
 plots/*
 figures/*
+supplementary_*
 
 # log files
 */logs/*
